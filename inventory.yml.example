@@ -1,0 +1,93 @@
+---
+all:
+  hosts:
+    lb1:
+      ansible_host: 172.31.8.192
+      ansible_connection: local
+    lb2:
+      ansible_host: 172.31.9.39
+    k8s1:
+      ansible_host: 172.31.14.118
+    k8s2:
+      ansible_host: 172.31.4.167
+  vars:
+    # https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html
+    ansible_python_interpreter: /usr/bin/python3
+  children:
+    load_balancers:
+      hosts:
+        lb1:
+        lb2:
+      vars:
+        # This is the floating/elastic IP that will move between
+        # keepalived hosts
+        keepalived_external_vip_cidr: 54.179.84.86
+        keepalived_instances:
+          external:
+            #remember you can use ansible variables here.
+            interface: eth0
+            state: BACKUP
+            virtual_router_id: 10
+            priority: 20
+            # Please set this if you want to use authentication in your VRRP
+            # instance. If more than 8 characters, it will be truncated.
+            # The password must be the same per router_id (so backup and
+            # master should have the same password).
+            #authentication_password: "your_password"
+            vips:
+              - "{{ keepalived_external_vip_cidr | default('127.0.2.1') }} dev {{ keepalived_external_interface | default('eth0') }}"
+            # Optional Scripts for tracking the current status of the keepalived instance
+            #track_scripts:
+            #  - haproxy_check_script
+            #  - pingable_check_script
+            # Optional Interfaces for tracking the link status of the interfaces listed
+            #track_interfaces:
+            #  - eth1
+            #  - eth2
+          internal:
+            interface: eth1
+            state: BACKUP
+            virtual_router_id: 11
+            priority: 20
+            # Please set this if you want to use authentication in your VRRP
+            # instance. If more than 8 characters, it will be truncated.
+            # The password must be the same per router_id (so backup and
+            # master should have the same password).
+            #authentication_password: "your_password"
+            # Optional Scripts for tracking the current status of the keepalived instance
+            #track_scripts:
+            #  - haproxy_check_script
+            #  - pingable_check_script
+            # Optional Interfaces for tracking the link status of the interfaces listed
+            #track_interfaces:
+            #  - eth1
+            #  - eth2
+            vips:
+              - "{{ keepalived_internal_vip_cidr | default('127.0.3.1') }} dev {{ keepalived_internal_interface | default('eth1') }} "
+
+        # Uncomment and adjust to make use of keepalived's virtual_server functions.
+        #keepalived_virtual_servers:
+        #  # Example with recycled {{ keepalived_internal_vip_cidr }}
+        #  - ip: "{{ keepalived_internal_vip_cidr | ipaddr('address') }}"
+        #    port: '53'
+        #    protocol: 'UDP'
+        #    lvs_method: 'NAT'
+        #    # Optional, set false or omit to not use it.
+        #    ha_suspend: true
+        #    real_servers:
+        #      - ip: '8.8.8.8'
+        #        port: '53'
+        #        # Currently on MISC_CHECK is supported. Section is optional.
+        #        misc_check:
+        #            - misc_path: '/usr/bin/host -W 1 github.com 8.8.8.8'
+        #              # Role default is 3
+        #              misc_timeout: '2'
+        #      - ip: '8.8.4.4'
+        #        port: '53'
+        #        misc_check:
+        #            - misc_path: '/usr/bin/host -W 1 github.com 8.8.4.4'
+        #              misc_timeout: '10'
+        #              # Optinal, set false or omit to not use it.
+        #              warmup: true
+        #              # Optinal, set false or omit to not use it.
+        #              misc_dynamic: true

@@ -1,0 +1,7 @@
+# THIS PART IS INCLUDED FOR FUTURE USE
+# Using workaround from https://github.com/jazzband/pip-tools/issues/204#issuecomment-550051424
+# -e file:.#egg=bare-asterisk-lb-operator  # egg name here must be the same value as the name argument of setup() in setup.py
+
+# Use dependency list in requirements.txt to constrain the dependencies that
+# gets resolved when compiling this file.
+-c requirements.txt

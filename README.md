@@ -6,6 +6,7 @@ for bare{metal,VM,whatever} k8s deployments.
 
 # Development Guide
 
+
 ## Prerequisites
 
 1. GNU Make
@@ -79,6 +80,15 @@ make clean
 
 
 ## Set Up The keepalived + IPVS LBs
+
+Copy the sample inventory file
+
+```
+cp inventory.yml.example inventory.yml
+```
+
+Modify the values of each entry under `all.vars` as needed. Once you have the
+variables just right, run:
 
 ```
 make keepalived

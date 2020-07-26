@@ -21,6 +21,11 @@ for bare{metal,VM,whatever} k8s deployments.
 
 ## Prepare Your Development Environment
 
+> This section is OPTIONAL but RECOMMENDED since it guarantees safety of your main
+> Python environment or any other virtual environments you have lying around. That
+> said, you're free to skip this part and just go with `python3 -m venv ./.venv`.
+> Just make sure to activate that virtualenv before you go to the next section!
+
 1. Install pyenv so that you can test with different versions of Python
 
 ```

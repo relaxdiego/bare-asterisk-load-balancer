@@ -7,6 +7,13 @@ for bare{metal,VM,whatever} k8s deployments.
 # Development Guide
 
 
+> IMPORTANT: Make sure you do all of the following in the first load balancer
+>            because that's how I did it and I don't have time to figure out how
+>            to do parameterization so that it's smart enough to know that it's
+>            not running on the first load balancer. OK??! OK. Just gonna walk it
+>            off now. Have a nice day.
+
+
 ## Prerequisites
 
 1. GNU Make

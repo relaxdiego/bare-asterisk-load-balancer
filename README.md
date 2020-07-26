@@ -19,7 +19,7 @@ for bare{metal,VM,whatever} k8s deployments.
 1. GNU Make
 
 
-## Prepare Your Development Environment
+## Prepare Your Python Environment
 
 > This section is OPTIONAL but RECOMMENDED since it guarantees safety of your main
 > Python environment or any other virtual environments you have lying around. That

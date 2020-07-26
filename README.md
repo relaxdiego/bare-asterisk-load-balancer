@@ -72,20 +72,6 @@ if the prompt includes the following:
 ... via 🐍 v3.7.7 (bare-asterisk-load-balancer)
 ```
 
-## Install All Other Dependencies
-
-```
-make dependencies
-```
-
-
-## Start Over
-
-```
-make clean
-```
-
-
 ## Set Up The keepalived + IPVS LBs
 
 Copy the sample inventory file
@@ -94,9 +80,31 @@ Copy the sample inventory file
 cp inventory.yml.example inventory.yml
 ```
 
-Modify the values of each entry under `all.vars` as needed. Once you have the
-variables just right, run:
+Modify the values of each entry under the `all->vars` stanza in that file as needed.
+Once you have the variables just right, run:
 
 ```
 make keepalived
+```
+
+# Other Handy Commands
+
+## Install Dependencies (It Will Know If It Needs to or Not)
+
+```
+make dependencies
+```
+
+
+## Start Over (Removes dependencies)
+
+```
+make clean
+```
+
+
+## Really Start Over (Remove Ansible Roles too!)
+
+```
+make clean all=t
 ```

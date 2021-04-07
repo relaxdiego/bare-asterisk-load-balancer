@@ -4,12 +4,27 @@
 #
 #    make dependencies
 #
-ansible==2.9.11           # via -r requirements.in
-cffi==1.14.0              # via cryptography
-cryptography==3.0         # via ansible
-jinja2==2.11.2            # via ansible
-markupsafe==1.1.1         # via jinja2
-netaddr==0.8.0            # via -r requirements.in
-pycparser==2.20           # via cffi
-pyyaml==5.3.1             # via ansible
-six==1.15.0               # via cryptography
+ansible-base==2.10.7
+    # via ansible
+ansible==2.10.0
+    # via -r requirements.in
+cffi==1.14.0
+    # via cryptography
+cryptography==3.0
+    # via ansible-base
+jinja2==2.11.2
+    # via ansible-base
+markupsafe==1.1.1
+    # via jinja2
+netaddr==0.8.0
+    # via -r requirements.in
+packaging==20.9
+    # via ansible-base
+pycparser==2.20
+    # via cffi
+pyparsing==2.4.7
+    # via packaging
+pyyaml==5.3.1
+    # via ansible-base
+six==1.15.0
+    # via cryptography
